@@ -134,10 +134,13 @@ group by u.users_id;
 -- not just by customer, but also by date so they can 
 -- see how much each customer is ordering on which date.
 
-select  o.`order_date`, ANY_VALUE(username),sum(cost*ANY_VALUE(o.quantity)) from `users` u
+select  CAST(o.`order_date` AS DATE) date, ANY_VALUE(username),sum(cost*ANY_VALUE(o.quantity)) from `users` u
 join `customer_order` co on u.users_id = co.users_id
 join `order` o on co.order_id = o.order_id
 join `order_menu` om on co.order_id = om.order_id
 join `menu` m on om.menu_id = m.menu_id
 group by o.`order_date`;
+
+
+
 
